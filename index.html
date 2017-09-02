@@ -13,7 +13,7 @@ title: Посты
         	Опубликовано <i><span>{{ post.date | date: "%d.%m.%Y" }}</span></i></span>
         	{% if page.tags != '' %}
             	с ярлыками {% for tag in post.tags %}
-            		<a class="label label-primary" href="{{ "/tags#{{ tag | slugify: 'raw' }}" | relative_url }}">{{ tag }}</a>
+            		<a class="label label-primary" href="{{ "/tags#" | append: tag | slugify: 'raw' | relative_url }}">{{ tag }}</a>
             	{% endfor %}
         	{% endif %}
 		</p>
