@@ -1,0 +1,12 @@
+---
+layout: post
+title: |-
+  Настройка положения оружия в Counter-Strike: Global Offensive
+date: 2014-03-19 20:44:00
+tags: 
+  - игры
+---
+
+<div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/-rpE9IkaTP9w/UynGztraEnI/AAAAAAAAFok/h5uLDN77trQ/s1600/2014-03-19_00001.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://2.bp.blogspot.com/-rpE9IkaTP9w/UynGztraEnI/AAAAAAAAFok/h5uLDN77trQ/s1600/2014-03-19_00001.jpg" width="500" /></a></div><br />Известно, что положение рук и оружия в CS:GO настраивается консольными командами, которые начинаются с <code>viewmodel_offset_</code>. Например, при таких значениях оно будет близко к тому, что мы привыкли видеть в CS:Source и CS 1.6 (как на скриншоте): <br /><pre class="brush: js">viewmodel_offset_x "2"
+viewmodel_offset_y "2"
+viewmodel_offset_z "-2"</pre>Эти переменные можно добавить в autoexec.cfg или просто ввести в консоли. Но тут есть одна загвоздка. В основном конфиге игры есть переменная <code>viewmodel_presetpos</code> с тремя значениями (1, 2 и 3), которые отвечают за дефолтные положения рук, их можно выбрать в интерфейсе CS:GO. Они сбрасывают значения <code>viewmodel_offset_</code> на предустановленные. На форумах советуют удалить эту переменную из конфига, однако при перезапуске игры она появится снова. Этого можно избежать, выставив для файла config.cfg статус "Только для чтения", но тогда все настройки, произведенные в интерфейсе, не будут сохраняться. Я нашел решение этой проблемы: нужно добавить в autoexec.cfg значение <code>viewmodel_presetpos "0"</code> и в конце файла дописать строчку <code>host_writeconfig</code>. Так содержимое autoexec будет прописываться в основной конфиг. Консоль ругнется на то, что <code>viewmodel_presetpos</code> не может иметь значение 0, но другого значения переменной не выставит, а значит ваши настройки <code>viewmodel_offset_</code> останутся в сохранности.<br /><br />Надеюсь, что в будущем разработчики исправят эту проблему. Например, добавив значение <code>viewmodel_presetpos "4"</code> для кастомных значений <code>viewmodel_offset_</code>.

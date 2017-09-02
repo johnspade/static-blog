@@ -1,0 +1,12 @@
+title: Записки Джона
+description: "Блог программиста: мысли о жизни, дневниковые записи и заметки о разработке программного обеспечения"
+about: "Блог программиста: мысли о жизни, дневниковые записи и заметки о разработке программного обеспечения"
+url: http://blog.johnspade.ru
+paginate: 4
+paginate_path: /pages/:num
+permalink: /posts/:title
+excerpt_separator: <a name="more"></a>
+
+plugins:
+  - jekyll-feed
+  - jekyll-paginate

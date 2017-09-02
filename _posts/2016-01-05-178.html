@@ -1,0 +1,32 @@
+---
+layout: post
+title: |-
+  Запуск приложения из среды разработки на удаленном компьютере
+date: 2016-01-05 23:35:00
+tags: 
+  - программирование
+---
+
+<div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-DvI5hYxSE3k/Vowo1cgfX-I/AAAAAAAAGJA/7t6nVRA6AOc/s1600/%25D1%2581%25D1%2585%25D0%25B5%25D0%25BC%25D0%25B0.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://3.bp.blogspot.com/-DvI5hYxSE3k/Vowo1cgfX-I/AAAAAAAAGJA/7t6nVRA6AOc/s1600/%25D1%2581%25D1%2585%25D0%25B5%25D0%25BC%25D0%25B0.png" /></a></div>Недавно нужно было разработать на заказ приложение для работы с несколькими веб-камерами одновременно. Дома нашлась только одна USB-камера&nbsp;+ встроенная на ноутбуке, поэтому решено было отлаживать программу на нем. Так как код я пишу на настольном компьютере, для запуска собранного приложения на ноутбуке нужно проделать следующие действия:<br /><div><ol><li>cобрать приложение в IDE и найти исполняемый файл в папке сборки;</li><li>скопировать его по локальной сети в общую папку на ноутбуке;</li><li>найти и запустить исполняемый файл на ноутбуке.</li></ol><div>Делать это руками долго и утомляет. Можно уменьшить количество телодвижений, если подключиться к ноутбуку через TeamViewer, но намного процесс это не ускоряет. Стало ясно, что мне нужен механизм деплоя приложения на ноутбук, желательно прямо из IDE: автоматическое копирования собранного исполняемого файла с компьютера на ноутбук и удаленный запуск приложения.</div></div><div><br /><a name='more'></a></div><div>В универе нас два семестра мучали изучением консольных команд Windows; очевидно, что пришло время наконец-то применить эти знания с пользой и написать батник, как самый быстрый и легкий способ решения моих проблем. Хотелось обойтись вообще без сторонних программ, но, к сожалению, в Windows нельзя так просто взять и запустить программу на удаленной машине. Встроенные средства либо требуют кучу системных настроек, либо не позволяют показать окно программы на удаленном компьютере. Поэтому я использовал популярную консольную утилиту PsExec, предназначенную специально для удаленного запуска процессов. В результате получился такой bat-файл:</div>
+<pre class="brush: powershell">set u=user
+set p=password
+E:\Service\pskill.exe \\JS-NOTEBOOK -u %u% -p %p% webcamviewer
+ping 127.0.0.1 -n 2 &gt; nul
+copy E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release\release\webcamviewer.exe \\JS-NOTEBOOK\deploy /y
+E:\Service\psexec.exe \\JS-NOTEBOOK -u %u% -p %p% -i D:\deploy\webcamviewer.exe</pre>Здесь утилита PsKill (вместе с PsExec идет в комплекте PsTools) убивает процесс предыдущей версии приложения, если оно запущено. JS-NOTEBOOK - имя моего ноутбука, build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release - директория сборки, deploy - папка для программы на ноутбуке. Команда copy копирует исполняемый файл приложения из директории сборки в папку на ноутбуке, подавляя запрос о перезаписи существующего файла (параметр&nbsp;<b>/y</b>). PsExec удаленно запускает приложение, тут важен параметр <b>-i</b> - интерактивный режим, то есть с показом окна приложения. <code>ping 127.0.0.1 -n 2 &gt; nul</code> - грязный хак, чтобы подождать, пока убиваемый процесс не освободит исполняемый файл для его замены.<br /><br />Теперь после сборки приложения в среде разработки можно выполнить батник, чтобы запустить программу на ноутбуке. Но хотелось бы производить сборку и запуск одним сочетанием клавиш прямо из IDE. Приложение написано на C++/Qt, IDE Qt Creator позволяет определять свои этапы сборки и запуска приложения. Я заменил стандартную конфигурацию запуска (выполнение собранного .exe-файла) на свою - выполнение bat-файла.<br /><div style="text-align: center;"><a href="http://3.bp.blogspot.com/-EMVzYLES-lM/VowZS1p5ucI/AAAAAAAAGIo/M2NjhUz1RE4/s1600/image%2B2016-01-05%2B22.27.47.png" imageanchor="1"><img border="0" src="http://3.bp.blogspot.com/-EMVzYLES-lM/VowZS1p5ucI/AAAAAAAAGIo/M2NjhUz1RE4/s1600/image%2B2016-01-05%2B22.27.47.png" /></a></div><div style="text-align: left;">Теперь по комбинации клавиш Ctrl-R (запуск) приложение будет собрано и запущено на ноутбуке. Можно назначить это сочетание на USB-педаль под столом и запускать программу на отладку одним пинком. Вывод консоли Qt Creator'а будет выглядеть как-то так:</div>
+<pre class="brush: plain">Запускается E:\Projects\cpp\webcamviewer\run.bat...
+E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release&gt;set u=user
+E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release&gt;set p=password
+E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release&gt;E:\Service\pskill.exe \\JS-NOTEBOOK -u user -p password webcamviewer 
+PsKill v1.15 - Terminates processes on local or remote systems
+Copyright (C) 1999-2012  Mark Russinovich
+Sysinternals - www.sysinternals.com
+Process webcamviewer killed on JS-NOTEBOOK.
+E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release&gt;ping 127.0.0.1 -n 2  1&gt;nul 
+E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release&gt;copy E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release\release\webcamviewer.exe \\JS-NOTEBOOK\deploy /y /z
+0% скопировано 
+100% скопировано. Скопировано файлов: 1.
+E:\Projects\cpp\build-webcamviewer-Desktop_Qt_5_5_1_MinGW_32bit-Release&gt;E:\Service\psexec.exe \\JS-NOTEBOOK -u user -p password -i D:\deploy\webcamviewer.exe 
+PsExec v2.11 - Execute processes remotely<br />Copyright (C) 2001-2014 Mark Russinovich
+Sysinternals - www.sysinternals.com</pre>
+Все популярные среды разработки позволяют определять действия при сборке и запуске приложений, поэтому для других IDE такая настройка деплоя на удаленный компьютер будет отличаться не сильно.

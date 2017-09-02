@@ -1,0 +1,11 @@
+---
+layout: post
+title: |-
+  Windows не видит дисковод: Что делать?
+date: 2010-11-06 02:01:00
+tags: 
+  - софт
+  - советы
+---
+
+<div align="center"><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/_Y2fn9BxvU3E/TNSSkVlxUzI/AAAAAAAACyQ/l7vZRGZv2qg/s1600/xp-atomic-wallpapers_13732_1280x1024.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="256" src="http://4.bp.blogspot.com/_Y2fn9BxvU3E/TNSSkVlxUzI/AAAAAAAACyQ/l7vZRGZv2qg/s320/xp-atomic-wallpapers_13732_1280x1024.jpg" width="320" /></a></div><i><span style="font-size: small;">Могу предложить одно из возможных решений этой проблемы для Windows XP</span></i></div><ol><li align="left"><span style="font-size: small;">Открываем <b>Пуск</b>, затем <b>Выполнить</b></span><span style="font-size: small;">.</span></li><li align="left"><span style="font-size: small;">Вводим <b>regedit</b> и нажимаем <b>ОК</b>.</span></li><li align="left"><span style="font-size: small;">&nbsp;Открывается реестр. В левой колонке открываем следующий раздел:<br /><blockquote>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\ {4D36E965-E325-11CE-BFC1-08002BE10318}&nbsp;</blockquote></span></li><li align="left"><span style="font-size: small;">&nbsp;На правой панели находим ссылку <b>UpperFilters</b>. Жмем на нее правой кнопкой мыши и выбираем <b>Удалить</b>.*</span></li><li align="left"><span style="font-size: small;">Если параметр <b>UpperFilters</b> отсутствует, то находим <b>LowerFilters</b> и удаляем его.</span></li><li align="left"><span style="font-size: small;"> </span>&nbsp;Закрываем редактор реестра и перезагружаемся.</li></ol>После этого система должна обнаружить дисковод.<br /><hr /><span style="background-color: red;"><span style="background-color: white;"><span style="color: red;"><span style="font-size: x-small;">*Примечание: все делаем очень осторожно, если удалить что-то не то, можно очень сильно навредить.&nbsp;</span></span></span></span>

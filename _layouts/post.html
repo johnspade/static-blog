@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<div class="page-header">
+	<h3>{{ page.title }}</h3>
+</div>
+<div>
+	{{ page.content }}
+</div>
+<p class="post-footer">
+		Опубликовано <em><span>{{ page.date | date: "%d.%m.%Y" }}</span></em>
+		{% if page.tags != '' %}
+			с ярлыками {% for tag in page.tags %}
+				<a class="label label-primary" href="/tags#{{ tag | slugify: 'raw' }}">
+			{{ tag }}</a>{% endfor %}
+		{% endif %}
+</p>
