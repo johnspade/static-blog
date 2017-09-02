@@ -6,14 +6,14 @@ title: Посты
 {% for post in paginator.posts %}
 	<div class="list-element">
 		<p class="post-date">{{ post.date | date: "%d.%m.%Y" }}</p>
-		<a href="{{ post.url }}"><h3>{{ post.title }}</h3></a>
+		<a href="{{ post.url | relative_url }}"><h3>{{ post.title }}</h3></a>
 		<div>{{ post.excerpt }}</div>
-		<a href="{{ post.url }}#more" class="cut-link">Читать полностью</a>
+		<a href="{{ post.url | relative_url }}#more" class="cut-link">Читать полностью</a>
 		<p class="post-footer">
         	Опубликовано <i><span>{{ post.date | date: "%d.%m.%Y" }}</span></i></span>
         	{% if page.tags != '' %}
             	с ярлыками {% for tag in post.tags %}
-            		<a class="label label-primary" href="/tags#{{ tag | slugify: 'raw' }}">{{ tag }}</a> 
+            		<a class="label label-primary" href="{{ "/tags#{{ tag | slugify: 'raw' }}" | relative_url }}">{{ tag }}</a>
             	{% endfor %}
         	{% endif %}
 		</p>

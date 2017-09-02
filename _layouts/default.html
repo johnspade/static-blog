@@ -6,11 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>{{ page.title }} – {{ site.title }}</title>
 	<link href="/feed.xml" rel="alternate" type="application/atom+xml"/>
-	<link rel="stylesheet" href="/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/css/main.css" />
-	<link rel="stylesheet" href="/css/bootstrap-treeview.css" />
-	<link rel="stylesheet" href="/css/syntaxhighlighter/shCore.css" />
-	<link rel="stylesheet" href="/css/syntaxhighlighter/shThemeDefault.css" />
+	<link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | relative_url }}" />
+	<link rel="stylesheet" href="{{ "/css/main.css" | relative_url }}" />
+	<link rel="stylesheet" href="{{ "/css/syntaxhighlighter/shCore.css" | relative_url }}" />
+	<link rel="stylesheet" href="{{ "/css/syntaxhighlighter/shThemeDefault.css" | relative_url }}" />
 	<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
 </head>
 <body>
@@ -82,25 +81,24 @@
 				<p class="text-center text-muted small">
 					© <a href="http://about.johnspade.ru">johnspade</a>, 2010—
 					<span>{{ 'now' | date: "%Y" }}</span> |
-					<a href="https://github.com/johnspade/blog">Исходный код на GitHub</a>
+					<a href="https://github.com/johnspade/static-blog">Исходный код на GitHub</a>
 				</p>
 			</div>
 		</div>
 	</div>
 </div>
 
-<script src="/js/jquery-1.11.3.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/syntaxhighlighter/shCore.js"></script>
-<script src="/js/syntaxhighlighter/shBrushCpp.js"></script>
-<script src="/js/syntaxhighlighter/shBrushJScript.js"></script>
-<script src="/js/syntaxhighlighter/shBrushXml.js"></script>
-<script src="/js/syntaxhighlighter/shBrushCss.js"></script>
-<script src="/js/syntaxhighlighter/shBrushPowerShell.js"></script>
-<script src="/js/syntaxhighlighter/shBrushPlain.js"></script>
-<script src="/js/syntaxhighlighter/shBrushCSharp.js"></script>
-<script src="/js/syntaxhighlighter/shBrushJava.js"></script>
-<script id="dsq-count-scr" src="//johnspade.disqus.com/count.js" async="async"></script>
+<script src="{{ "/js/jquery-1.11.3.min.js" | relative_url }}"></script>
+<script src="{{ "/js/bootstrap.min.js" | relative_url }}\"></script>
+<script src="{{ "/js/syntaxhighlighter/shCore.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushCpp.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushJScript.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushXml.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushCss.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushPowerShell.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushPlain.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushCSharp.js" | relative_url }}"></script>
+<script src="{{ "/js/syntaxhighlighter/shBrushJava.js" | relative_url }}"></script>
 <script>SyntaxHighlighter.all()</script>
 </body>
 </html>

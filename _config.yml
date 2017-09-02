@@ -1,7 +1,8 @@
 title: Записки Джона
 description: "Блог программиста: мысли о жизни, дневниковые записи и заметки о разработке программного обеспечения"
 about: "Блог программиста: мысли о жизни, дневниковые записи и заметки о разработке программного обеспечения"
-url: https://johnspade.github.io/static-blog/
+url: https://johnspade.github.io
+baseurl: /static-blog
 paginate: 4
 paginate_path: /pages/:num
 permalink: /posts/:title
