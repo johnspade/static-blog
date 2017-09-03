@@ -6,6 +6,7 @@ paginate: 4
 paginate_path: /pages/:num
 permalink: /posts/:title
 excerpt_separator: <a name="more"></a>
+future: true
 
 plugins:
   - jekyll-feed
