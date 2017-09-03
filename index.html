@@ -23,12 +23,12 @@ title: Посты
 	<ul class="pager">
 		{% if paginator.previous_page %}
 			<li>
-				<a href="{{ paginator.previous_page_path }}">Позже</a>
+				<a href="{{ site.baseurl }}{{ paginator.previous_page_path }}">Позже</a>
 			</li>
 		{% endif %}
 		{% if paginator.next_page %}
 			<li>
-				<a href="{{ paginator.next_page_path }}">Раньше</a>
+				<a href="{{ site.baseurl }}{{ paginator.next_page_path }}">Раньше</a>
 			</li>
 		{% endif %}
 	</ul>
