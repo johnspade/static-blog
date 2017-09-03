@@ -5,11 +5,11 @@
 	<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>{{ page.title }} – {{ site.title }}</title>
-	<link href="{{ "/feed.xml" | relative_url }}" rel="alternate" type="application/atom+xml"/>
-	<link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | relative_url }}" />
-	<link rel="stylesheet" href="{{ "/css/main.css" | relative_url }}" />
-	<link rel="stylesheet" href="{{ "/css/syntaxhighlighter/shCore.css" | relative_url }}" />
-	<link rel="stylesheet" href="{{ "/css/syntaxhighlighter/shThemeDefault.css" | relative_url }}" />
+	<link href="{{ site.baseurl }}/feed.xml" rel="alternate" type="application/atom+xml"/>
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" />
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/syntaxhighlighter/shCore.css" />
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/syntaxhighlighter/shThemeDefault.css" />
 	<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
 </head>
 <body>
@@ -22,14 +22,14 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{{ "/" | relative_url }}">{{ site.title }}</a>
+			<a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
 		</div>
 		<p class="navbar-text">All work and no play makes John a dull boy</p>
 		<div class="collapse navbar-collapse" id="nav-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ "/" | relative_url }}">Главная</a></li>
-				<li><a href="{{ "/archive" | relative_url }}">Архив</a></li>
-				<li><a href="{{ "/tags" | relative_url }}">Теги</a></li>
+				<li><a href="{{ site.baseurl }}/">Главная</a></li>
+				<li><a href="{{ site.baseurl }}/archive">Архив</a></li>
+				<li><a href="{{ site.baseurl }}/tags">Теги</a></li>
 			</ul>
 		</div>
 	</div>
@@ -88,17 +88,17 @@
 	</div>
 </div>
 
-<script src="{{ "/js/jquery-1.11.3.min.js" | relative_url }}"></script>
-<script src="{{ "/js/bootstrap.min.js" | relative_url }}\"></script>
-<script src="{{ "/js/syntaxhighlighter/shCore.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushCpp.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushJScript.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushXml.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushCss.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushPowerShell.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushPlain.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushCSharp.js" | relative_url }}"></script>
-<script src="{{ "/js/syntaxhighlighter/shBrushJava.js" | relative_url }}"></script>
+<script src="{{ site.baseurl }}/js/jquery-1.11.3.min.js"></script>
+<script src="{{ site.baseurl }}/js/bootstrap.min.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shCore.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushCpp.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushJScript.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushXml.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushCss.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushPowerShell.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushPlain.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushCSharp.js"></script>
+<script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushJava.js"></script>
 <script>SyntaxHighlighter.all()</script>
 </body>
 </html>
