@@ -12,8 +12,8 @@ title: Посты
 		<p class="post-footer">
         	Опубликовано <i><span>{{ post.date | date: "%d.%m.%Y" }}</span></i>
         	{% if page.tags != '' %}
-            	<span>с ярлыками {% for tag in post.tags %}
-					<a class="label label-primary" href="{{ site.baseurl }}{{ "/tags#" | append: tag | slugify: 'raw'  }}">{{ tag }}</a></span>
+            	с ярлыками {% for tag in post.tags %}
+					<a class="label label-primary" href="{{ site.baseurl }}{{ "/tags#" | append: tag | slugify: 'raw'  }}">{{ tag }}</a>
             	{% endfor %}
         	{% endif %}
 			<br />
