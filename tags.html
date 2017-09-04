@@ -3,26 +3,29 @@ layout: default
 title: Теги
 ---
 
+<div class="page-header">
+	<h3>{{ page.title }}</h3>
+</div>
+
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
 <p>
-	{% for tag in site.tags %}
-	{% assign t = tag | first %}
-		<a class="label label-primary" href="#{{ t | slugify: 'raw' }}">{{ t }}</a>
-	{% endfor %}
+	{% for item in (0..site.tags.size) %}{% unless forloop.last %}
+		{% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+		<a class="label label-primary" href="#{{ this_word | slugify: 'raw' }}">{{ this_word }} ({{ site.tags[this_word].size }})</a>
+	{% endunless %}{% endfor %}
 </p>
 
-{% for tag in site.tags %}
-	{% assign t = tag | first %}
-	{% assign posts = tag | last %}
-
-	<h3 id="{{ t | slugify: 'raw' }}">{{ t }}</h3>
-	<ul>
-	{% for post in posts %}
-		{% if post.tags contains t %}
+{% for item in (0..site.tags.size) %}{% unless forloop.last %}
+	{% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+	<h3 id="{{ this_word | slugify: 'raw' }}">{{ this_word }}</h3>
+	<ol>
+		{% for post in site.tags[this_word] %}{% if post.title != null %}
 			<li>
 				<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
 				<span>{{ post.date | date: "%d.%m.%Y"  }}</span>
 			</li>
-		{% endif %}
-	{% endfor %}
-	</ul>
-{% endfor %}
+		{% endif %}{% endfor %}
+	</ol>
+{% endunless %}{% endfor %}
