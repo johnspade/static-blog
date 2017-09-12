@@ -68,9 +68,7 @@
 				{% for tag in site.tags %}
 					<span style="font-size: {{ tag | last | size | times: 100 | divided_by: site.tags.size | plus: 80 }}%">
 						{% capture tag_name %}{{ tag | first }}{% endcapture %}
-						<a href="{{ site.baseurl }}{{ "/tags#" | append: tag_name | slugify: 'raw'  }}">
-							{{ tag_name }}
-						</a>
+						<a href="{{ site.baseurl }}{{ "/tags#" | append: tag_name | slugify: 'raw' }}">{{ tag_name }}</a>
 					</span>
 				{% endfor %}
 			</div>
