@@ -16,8 +16,6 @@ title: Посты
 					<a class="label label-primary" href="{{ site.baseurl }}{{ "/tags#" | append: tag | slugify: 'raw' }}">{{ tag }}</a>
             	{% endfor %}
         	{% endif %}
-			<br />
-			<a href="{{ site.baseurl }}{{ post.url }}#disqus_thread"></a>
 		</p>
 	</div>
 {% endfor %}
