@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" />
 	<link rel="stylesheet" href="{{ site.baseurl }}/css/syntaxhighlighter/shCore.css" />
 	<link rel="stylesheet" href="{{ site.baseurl }}/css/syntaxhighlighter/shThemeDefault.css" />
-	<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -83,20 +82,6 @@
 				<a href="https://m.do.co/c/1e0532ffbcbc">Зарегистрироваться и получить $10 на счет</a>
 			</div>
 			<div class="sidebar-widget">
-				<h4>ВКонтакте</h4>
-				<div id="vk_groups"></div>
-				<script type="text/javascript">
-					VK.Widgets.Group("vk_groups", {
-						mode: 1,
-						width: "auto",
-						height: "400",
-						color1: 'ffffff',
-						color2: '333333',
-						color3: 'dd4814'
-					}, 22734810);
-				</script>
-			</div>
-			<div class="sidebar-widget">
 				<p class="text-center text-muted small">
 					© <a href="http://about.johnspade.ru">johnspade</a>, 2010—
 					<span>{{ 'now' | date: "%Y" }}</span> |
@@ -119,20 +104,5 @@
 <script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushCSharp.js"></script>
 <script src="{{ site.baseurl }}/js/syntaxhighlighter/shBrushJava.js"></script>
 <script>SyntaxHighlighter.all()</script>
-<script>
-	(function (i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function () {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o),
-			m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-	ga('create', 'UA-18212174-5', 'auto');
-	ga('send', 'pageview');
-</script>
 </body>
 </html>
