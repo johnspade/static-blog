@@ -13,7 +13,7 @@ title: Теги
 <p>
 	{% for item in (0..site.tags.size) %}{% unless forloop.last %}
 		{% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
-		<a class="label label-primary" href="#{{ this_word | slugify: 'raw' }}">{{ this_word }} ({{ site.tags[this_word].size }})</a>
+		<a class="badge badge-primary" href="#{{ this_word | slugify: 'raw' }}">{{ this_word }} ({{ site.tags[this_word].size }})</a>
 	{% endunless %}{% endfor %}
 </p>
 

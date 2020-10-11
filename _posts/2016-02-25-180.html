@@ -30,29 +30,29 @@ tags:
 </p>
 <p>
 	Отдельной интересной задачей был перенос постов со старого блога. Blogger позволяет выгрузить бэкап шаблона, настроек и данных для блога в формате Atom (XML). В файле бэкапа каждая сущность (пост или настройка) находится в теге <code>&lt;entry&gt;&lt;/entry&gt;</code>:
-	<pre class="brush: xml">
-&lt;entry&gt;
-	&lt;id&gt;tag:blogger.com,1999:blog-5399870426561470322.post-5428309052430702807&lt;/id&gt;
-	&lt;published&gt;2012-04-06T04:48:00.001+04:00&lt;/published&gt;
-	&lt;updated&gt;2012-04-06T04:48:20.357+04:00&lt;/updated&gt;
-	&lt;app:control xmlns:app=&#39;http://purl.org/atom/app#&#39;&gt;
-		&lt;app:draft&gt;yes&lt;/app:draft&gt;
-	&lt;/app:control&gt;
-	&lt;category scheme=&#39;http://schemas.google.com/g/2005#kind&#39; term=&#39;http://schemas.google.com/blogger/2008/kind#post&#39;/&gt;
-	&lt;category scheme=&#39;http://www.blogger.com/atom/ns#&#39; term=&#39;ярлык&#39;/&gt;
-	&lt;title type=&#39;text&#39;&gt;Название поста&lt;/title&gt;
-	&lt;content type=&#39;html&#39;&gt;Содержание поста&lt;/content&gt;
-	&lt;link rel=&#39;edit&#39; type=&#39;application/atom+xml&#39; href=&#39;#&#39;/&gt;
-	&lt;link rel=&#39;self&#39; type=&#39;application/atom+xml&#39; href=&#39;#&#39;/&gt;
-	&lt;author&gt;
-		&lt;name&gt;Ivan Lopatin&lt;/name&gt;
-		&lt;uri&gt;https://plus.google.com/111810495307545793719&lt;/uri&gt;
-		&lt;email&gt;noreply@blogger.com&lt;/email&gt;
-		&lt;gd:image rel=&#39;http://schemas.google.com/g/2005#thumbnail&#39; width=&#39;32&#39; height=&#39;32&#39; src=&#39;//lh3.googleusercontent.com/-PU2QEyFVKu8/AAAAAAAAAAI/AAAAAAAAFWY/S8x814Iw6hs/s32-c/photo.jpg&#39;/&gt;
-	&lt;/author&gt;
-&lt;/entry&gt;</pre>
+	{% highlight xml linenos %}
+<entry>
+	<id>tag:blogger.com,1999:blog-5399870426561470322.post-5428309052430702807</id>
+	<published>2012-04-06T04:48:00.001+04:00</published>
+	<updated>2012-04-06T04:48:20.357+04:00</updated>
+	<app:control xmlns:app='http://purl.org/atom/app#'>
+		<app:draft>yes</app:draft>
+	</app:control>
+	<category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/blogger/2008/kind#post'/>
+	<category scheme='http://www.blogger.com/atom/ns#' term='ярлык'/>
+	<title type='text'>Название поста</title>
+	<content type='html'>Содержание поста</content>
+	<link rel='edit' type='application/atom+xml' href='#'/>
+	<link rel='self' type='application/atom+xml' href='#'/>
+	<author>
+		<name>Ivan Lopatin</name>
+		<uri>https://plus.google.com/111810495307545793719</uri>
+		<email>noreply@blogger.com</email>
+		<gd:image rel='http://schemas.google.com/g/2005#thumbnail' width='32' height='32' src='//lh3.googleusercontent.com/-PU2QEyFVKu8/AAAAAAAAAAI/AAAAAAAAFWY/S8x814Iw6hs/s32-c/photo.jpg'/>
+	</author>
+</entry>{% endhighlight %}
 	Здесь на пост указывает вложенный тег <code>&lt;category&gt;&lt;/category&gt;</code> с атрибутом <code>term='http://schemas.google.com/blogger/2008/kind#post'</code>. Название и текст поста находятся в тегах <code>&lt;title&gt;&lt;/title</code> и <code>&lt;content&gt;&lt;/content&gt;</code> соответственно. Вместе с постами я также переносил и их ярлыки, они находятся в тегах типа <code>&lt;category scheme=&#39;http://www.blogger.com/atom/ns#&#39; term=&#39;ярлык&#39;/&gt;</code>. Также важно отфильтровать черновики постов, у них присутствует тег с содержанием <code>&lt;app:draft&gt;yes&lt;/app:draft&gt;</code>. Это все данные, которые мне были нужны, для их получения я написал программу на C#, которая разобрала XML и подложила посты в базу данных блога напрямую, ибо в C# есть язык запросов LINQ to XML, с которым парсинг XML не кажется таким невеселым занятием:
-	<pre class="brush: csharp">
+	{% highlight csharp linenos %}
 XDocument doc = XDocument.Load("E:\\blog-02-13-2016.xml");
 XNamespace ns = "http://www.w3.org/2005/Atom";
 XNamespace nsApp = "http://purl.org/atom/app#";
@@ -68,7 +68,7 @@ var conn = new NpgsqlConnection("server=localhost;port=5432;username=postgres;pa
 conn.Open();
 var insertPostsQuery = new StringBuilder();
 var insertPostTagsQuery = new StringBuilder();
-var tags = new List&lt;string&gt;();
+var tags = new List<string>();
 for (int i = 0; i < posts.Count(); i++)
 {
     var post = posts[i];
@@ -91,37 +91,37 @@ var insertTagsQuery = new StringBuilder();
 tags.Distinct().ToList().ForEach(t => insertTagsQuery.Append($"insert into tags (tag_name) values (\'{t}\');"));
 (new NpgsqlCommand(insertTagsQuery.ToString(), conn)).ExecuteNonQuery();
 (new NpgsqlCommand(insertPostTagsQuery.ToString(), conn)).ExecuteNonQuery();
-conn.Close();</pre>
+conn.Close();{% endhighlight %}
 </p>
 <p>
 	Помимо нового движка, блог также сменил и адрес, переехал с основного домена johnspade.ru на поддомен blog.johnspade.ru. Вследствие этого внешние ссылки, в первую очередь с <a href="https://vk.com/johnspadeblog">паблика блога ВКонтакте</a>, стали нерабочими. Немного изменив свою программу для разбора бэкапа блога, я составил список ссылок на посты и поиском по названиям подобрал соответствующие им идентификаторы записей в базе данных нового блога. Получился список соответствий вида { "/2014/02/cat.html": 170, "/2013/10/unknown-book.html": 169, ... }. На домене johnspade.ru развернул приложение, которое переадресовывает пользователей на посты в новом блоге в соответствии с таблицей.
 </p>
 <p>
 	Также в рамках переезда я решил сделать у себя аналоги виджетов из боковой колонки старого блога, в первую очередь список ярлыков. Хотелось по возможности обойтись без программирования на Javascript, поэтому реализовал его на Thymeleaf. Размер шрифта каждого ярлыка в списке зависит от количества постов с этим ярлыком. Сначала нужно задать границы размера шрифта, чтобы текст не был неприлично большим или маленьким, я взял значения от 80% до 160% базового размера. Это значит, что размер будет изменяться в интервале 80%. Далее нужно вычислить коэффициент, на который будет умножаться количество постов для каждого ярлыка, то есть разделить 80% на максимальное количество постов. Таким образом, название ярлыка с самым большим количеством постов всегда будет иметь размер 160%, а ярлык с одним постом – ~80%. Код виджета выглядит так:
-	<pre class="brush: html">
-&lt;div class=&quot;sidebar-widget&quot; th:if=&quot;${!#lists.isEmpty(tags)}&quot;
-     th:with=&quot;coef = ${80.0 / tags[0].posts.size()}&quot;&gt;
-    &lt;h4&gt;Ярлыки&lt;/h4&gt;
-    &lt;span th:each=&quot;tag : ${tags}&quot; th:if=&quot;${!#lists.isEmpty(tag.posts)}&quot;
-          th:style=&quot;&#39;font-size: &#39; + ${#numbers.formatDecimal(80 + tag.posts.size() * coef, 0, 0)} + &#39;%;&#39;&quot;&gt;
-        &lt;a th:href=&quot;@{/posts(tag = ${tag.name})}&quot;&gt;&lt;span th:text=&quot;${tag.name}&quot; /&gt;&lt;/a&gt;&amp;nbsp;
-        &lt;span th:text=&quot;|(${tag.posts.size()}) |&quot; /&gt;
-    &lt;/span&gt;
-&lt;/div&gt;</pre>
+	{% highlight html linenos %}
+<div class="sidebar-widget" th:if="${!#lists.isEmpty(tags)}"
+     th:with="coef = ${80.0 / tags[0].posts.size()}">
+    <h4>Ярлыки</h4>
+    <span th:each="tag : ${tags}" th:if="${!#lists.isEmpty(tag.posts)}"
+          th:style="'font-size: ' + ${#numbers.formatDecimal(80 + tag.posts.size() * coef, 0, 0)} + '%;'">
+        <a th:href="@{/posts(tag = ${tag.name})}"><span th:text="${tag.name}" /></a>&nbsp;
+        <span th:text="|(${tag.posts.size()}) |" />
+    </span>
+</div>{% endhighlight %}
 </p>
 <p>
 	Виджет для архива по месяцам реализовать без Javascript не получилось, так как тег HTML5 <code>&lt;details /&gt;</code> для раскрывающегося списка пока что поддерживает только браузер Chrome. Для этого я использовал дополнение Bootstrap Tree View, которое поддерживает стили Bootstrap, а Thymeleaf позволил сформировать объект с данными для него в Java-коде на сервере и передать его прямо в JS-скрипт, очень удобно:
-	<pre class="brush: html">
-&lt;script th:inline=&quot;javascript&quot;&gt;
-    /*&lt;![CDATA[*/
+	{% highlight html linenos %}
+<script th:inline="javascript">
+    /*<![CDATA[*/
     var data = /*[[${tree}]]*/ null;
-    $(&#39;#tree&#39;).treeview({data: data, enableLinks: true, showBorder: false, showIcon: false, showTags: true});
-    /*]]&gt;*/
-&lt;/script&gt;</pre>
+    $('#tree').treeview({data: data, enableLinks: true, showBorder: false, showIcon: false, showTags: true});
+    /*]]>*/
+</script>{% endhighlight %}
 </p>
 <p>
 	Теперь о кэшировании. Так как посты в блоге обновляются сравнительно нечасто, а данных хранится сравнительно немного, приложению совершенно незачем по каждому запросу лезть в базу данных, поэтому результат каждого обращения к БД кэшируется и потом отдается пользователям уже из памяти. В качестве отсечки для кэширования используется дата последнего сохранения данных (создание/редактирование/удаление поста). Кэширование в Spring настраивается очень просто – кэшируемые методы размечаются аннотацией <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/cache/annotation/Cacheable.html">@Cacheable</a>. Результат вызова метода сохраняется в кэш и при последующих вызовах метода с такими же значениями параметров Spring сразу вернет результат без выполнения тела метода. Для этого генерируется ключ кэша по значениям параметров. Чтобы не вставлять дату последнего сохранения данных во все методы как неиспользуемый параметр, я переопределил генератор ключа кэширования, добавив отсечку в нем:
-	<pre class="brush: java">
+	{% highlight java linenos %}
 package ru.johnspade.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,7 +140,7 @@ public class CacheKeyGenerator implements KeyGenerator {
 		return SimpleKeyGenerator.generateKey(params, cacheService.getLastSaveTimestamp());
 	}
 
-}</pre>
+}{% endhighlight %}
 </p>
 <p>
 	На этом все, чтобы следить за новыми постами в этом блоге, предлагаю подписаться на <a href="https://vk.com/johnspadeblog">страницу ВКонтакте</a> или <a href="/rss">RSS-ленту</a>.

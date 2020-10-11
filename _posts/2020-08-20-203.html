@@ -35,28 +35,28 @@ tags:
 <p>
   В коде бота все возможные действия при нажатии на инлайн-кнопки можно представить в виде sealed-иерархии кейс-классов и объектов (ADT):
 </p>
-<pre class="brush: scala">
+{% highlight scala linenos %}
 sealed trait CallbackData
 
 case class BuyIceCream(flavor: String, quantity: Int) extends CallbackData
 case object Exit extends CallbackData
-</pre>
+{% endhighlight %}
 <p>
   Так для обработки полученного CallbackData можно использовать паттерн-матчинг, и компилятор выдаст предупреждение,
   если мы забыли обработать одно из действий. Это не подойдёт для ботов с большим количеством действий, сопоставление
   получится слишком длинным, но для небольшого бота оказалось весьма удобным:
 </p>
-<pre class="brush: scala">
+{% highlight scala linenos %}
 callbackData match {
   case BuyIceCream(flavor, _) => reply(s"Enjoy your $flavor ice cream!")
   case Exit => reply("Goodbye")
 }
-</pre>
+{% endhighlight %}
 <p>
   Из Scala-библиотек мне понравилась <a href="https://nrinaudo.github.io/kantan.csv">kantan.csv</a>. Она позволяет производить
   сериализацию/десериализацию кейс-классов в/из CSV, например так:
 </p>
-<pre class="brush: scala">
+{% highlight scala linenos %}
 import kantan.csv._
 import kantan.csv.ops._
 
@@ -69,7 +69,7 @@ BuyIceCream("vanilla", 1).writeCsvRow(rfc)
 "vanilla,1".readCsv[List, BuyIceCream](rfc).head.toOption.get
 // val res0: String = vanilla,1
 // val res1: BuyIceCream = BuyIceCream(vanilla,1)
-</pre>
+{% endhighlight %}
 <p>
   Однако в ней нет инструментов для работы с sealed-иерархиями. Модуль generic-extras библиотеки Circe позволяет мапить
   ADT в JSON, добавляя в JSON-объекты дискриминатор — поле с именем типа наследника. Я решил реализовать аналогичное поведение
@@ -86,7 +86,7 @@ BuyIceCream("vanilla", 1).writeCsvRow(rfc)
   тайпклассов RowEncoder и RowDecoder из kantan.csv. Для сериализации краткое имя класса (typeName.short) добавляется
   в начало списка колонок из полей кейс-класса:
 </p>
-<pre class="brush: scala">
+{% highlight scala linenos %}
 import kantan.csv.RowEncoder
 import magnolia._
 
@@ -109,11 +109,11 @@ object MagnoliaRowEncoder {
 
   implicit def deriveRowEncoder[T]: Typeclass[T] = macro Magnolia.gen[T]
 }
-</pre>
+{% endhighlight %}
 <p>
   При десериализации из наследников CallbackData выбирается класс, чье краткое имя совпадает со значением первой колонки:
 </p>
-<pre class="brush: scala">
+{% highlight scala linenos %}
 import kantan.csv.{DecodeError, RowDecoder}
 import magnolia._
 
@@ -143,11 +143,11 @@ object MagnoliaRowDecoder {
 
   implicit def deriveRowDecoder[T]: Typeclass[T] = macro Magnolia.gen[T]
 }
-</pre>
+{% endhighlight %}
 <p>
     Теперь можно энкодить и декодить CallbackData:
 </p>
-<pre class="brush: scala">
+{% highlight scala linenos %}
 import MagnoliaRowEncoder._
 import MagnoliaRowDecoder._
 
@@ -155,7 +155,7 @@ BuyIceCream("vanilla", 1).asInstanceOf[CallbackData].writeCsvRow(rfc)
 // res0: String = BuyIceCream,vanilla,1
 "BuyIceCream,vanilla,1".readCsv[List, CallbackData](rfc).head.toOption.get
 // res1: CallbackData = BuyIceCream(vanilla,1)
-</pre>
+{% endhighlight %}
 <p>
   Так несколько строчек кода на Magnolia позволили мне использовать ADT CallbackData для работы с CSV со всеми вытекающими
   бонусами исчерпывающего (exhaustive) паттерн-матчинга.
