@@ -1,7 +1,7 @@
 title: Записки Джона
 description: "Блог программиста: мысли о жизни, дневниковые записи и заметки о разработке программного обеспечения"
 about: "Блог программиста: мысли о жизни, дневниковые записи и заметки о разработке программного обеспечения"
-url: http://blog.johnspade.ru
+url: https://blog.johnspade.ru
 paginate: 4
 paginate_path: /pages/:num
 permalink: /posts/:title
