@@ -12,7 +12,7 @@ layout: default
 		Опубликовано <em><span>{{ page.date | date: "%d.%m.%Y" }}</span></em>
 		{% if page.tags != '' %}
 			с ярлыками {% for tag in page.tags %}
-				<a class="label label-primary" href="{{ site.baseurl }}{{ "/tags#" | append: tag | slugify: 'raw' }}">
+				<a class="badge badge-primary" href="{{ site.baseurl }}{{ "/tags#" | append: tag | slugify: 'raw' }}">
 			{{ tag }}</a>{% endfor %}
 		{% endif %}
 </p>
